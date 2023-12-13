@@ -34,4 +34,8 @@ describe('isAnagram', () => {
 		expect(isAnagram('hello', 'hello!')).toBe(false);
 		expect(isAnagram('openai!', 'open')).toBe(false);
 	});
+
+	test("returns false for where one string's characters is a superset of another", () => {
+		expect(isAnagram('cuttacc', 'cuttack')).toBe(false);
+	})
 });
