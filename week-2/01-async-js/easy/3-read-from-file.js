@@ -6,3 +6,16 @@ Try to do an expensive operation below the file read and see how it affects the 
 Make the expensive operation more and more expensive and see how it affects the output. 
 
 */
+
+let fs = require('fs');
+
+
+fs.readFile("a.txt", "utf-8", function(err,data) {
+  console.log(data);
+});
+
+let a = 0
+for (i = 0; i < 1000000000; i++) {
+  a += i;
+}
+console.log(a)
