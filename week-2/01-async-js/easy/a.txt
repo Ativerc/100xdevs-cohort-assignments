@@ -1,1 +1,1 @@
-hi from a.txt
+written from script
