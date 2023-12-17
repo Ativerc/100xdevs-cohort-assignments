@@ -14,29 +14,19 @@
 */
 
 function calculateTotalSpentByCategory(transactions) {
-  let categories = [];
-  let cartegoriesValue = [];
-  // if transactions[i][category] present in categories
-  // categories
-  for (let i = 0; i < transactions.length; i++) {
-    if (categories.includes(transactions[i]['category'])) {
-      let getIndex = categories.indexOf(transactions[i]['category']);
-      cartegoriesValue[getIndex] += transactions[i]['price'];
-    } else {
-      categories.push(transactions[i]['category']);
-      cartegoriesValue.push(transactions[i]['price']);
+  let categoryTotal = {};
+  transactions.forEach((element, index, array) => {;
+    // if (categoryTotal[element.category])
+    if (!categoryTotal[element.category]) {
+      categoryTotal[element.category] = 0;
     }
-  }
-  let output = [];
-  for (let i = 0; i < categories.length; i++) {
-    countObject = {
-      category: categories[i],
-      totalSpent: cartegoriesValue[i]
-    }
-    output.push(countObject);
-  }
-
-  return output;
+    categoryTotal[element.category] += element.price;
+  });
+  // return categoryTotal;
+  return (Object.entries(categoryTotal)).map(([key, value]) => ({
+    category: key,
+    totalSpent: value,
+  }));
 }
 
 // let testObjectArray = [{
@@ -53,6 +43,20 @@ function calculateTotalSpentByCategory(transactions) {
 //   category: 'Food',
 //   itemName: 'Samosa',
 // }, 
+// {
+//   id: 3,
+//   timestamp: 1656076800360,
+//   price: 8,
+//   category: 'Food',
+//   itemName: 'Biryani',
+// },
+// {
+//   id: 3,
+//   timestamp: 1656076800480,
+//   price: 12,
+//   category: 'Cloth',
+//   itemName: 'Shirt',
+// },
 
 // ]
 
