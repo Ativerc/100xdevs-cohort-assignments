@@ -45,5 +45,93 @@
   const app = express();
   
   app.use(bodyParser.json());
+
+  let todoArray = [ {
+    title: 'Item 1',
+    completed: true,
+    description: 'Item 1 Description',
+    id: 1
+  },
+  {
+    title: 'Item 2',
+    completed: true,
+    description: 'Item 2 Description',
+    id: 2
+  },
+  {
+    title: 'Item 3',
+    completed: true,
+    description: 'Item 3 Description',
+    id: 3
+  }
+];
+  let todoIdCount = todoArray.length;
   
+  app.get("/todos", function(req, res){
+    if (todoArray.length == 0) {
+      res.status(200).json({
+        msg: "No todos yet!"
+      });
+    } else {
+      res.status(200).json(todoArray);
+    }
+  });
+
+  app.get("/todos/:id", function(req, res){
+    const id = req.params.id;
+    let result = todoArray.find((element) => element.id == id);
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).send("No such todo!");
+    }
+  })
+
+  app.post("/todos", function(req, res){
+    let todoObject = req.body;
+    // :TODO: Validation Required!
+    todoIdCount += 1
+    todoObject = Object.assign({}, todoObject, { id: todoIdCount });
+    todoArray.push(todoObject);
+    res.status(201).json({msg: `Created new Todo with id: ${todoIdCount}`})
+    console.log(todoArray)
+  })
+
+  app.put("/todos/:id", function(req, res) {
+    let id = req.params.id;
+    let requestedTodo = todoArray.find((element) => element.id == id);
+    if (requestedTodo == undefined) {
+      console.log("reached into 404");
+      console.log("")
+      res.status(404).send();
+    } else {
+      let newTodo = req.body;
+      newTodo.id = +id;
+      let index = todoArray.findIndex((element) => element.id == id);
+      if (index != -1) {
+        todoArray[index] = newTodo;
+      }
+      res.status(200).json({
+        changedId: id,
+        newTodoItem: todoArray[index]
+      });
+    }
+  })
+
+  app.delete("/todos/:id", function(req, res){
+    let idToRemove = req.params.id;
+    const indexToRemove = todoArray.findIndex((element) => element.id == idToRemove);
+    if (indexToRemove !== -1) {
+      const removalCandidate = todoArray[indexToRemove];
+      todoArray.splice(indexToRemove, 1)
+      res.status(200).json({
+        msg: "Todo Object Removed",
+        newTodoArray: todoArray
+      });
+    } else {
+      res.status(404).send("No such Todo Object found!")
+    }
+  })
+
+  app.listen(3000);  
   module.exports = app;
