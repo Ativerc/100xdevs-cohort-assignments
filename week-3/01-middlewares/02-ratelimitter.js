@@ -16,6 +16,22 @@ setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
 
+function rateLimiter(req, res, next) {
+  const userId = req.headers["user-id"];
+
+  // Handle missing user-id header
+  if (!userId) {
+    res.status(400).send('Missing user-id header');
+  }
+  numberOfRequestsForUser[userId] = (numberOfRequestsForUser[userId] || 0) + 1; 
+  if (numberOfRequestsForUser[userId] > 5) {
+    res.status(404).send();
+  }
+  next();
+}
+
+app.use(rateLimiter);
+
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
 });
@@ -23,5 +39,7 @@ app.get('/user', function(req, res) {
 app.post('/user', function(req, res) {
   res.status(200).json({ msg: 'created dummy user' });
 });
+
+// app.listen(3000)
 
 module.exports = app;
