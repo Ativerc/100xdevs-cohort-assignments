@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const userMiddleware = require("../middleware/user");
-const { User } = require("../db");
+const { User, Course } = require("../db");
 
 // User Routes
 router.post('/signup', async (req, res) => {
@@ -37,8 +37,18 @@ router.get('/courses', userMiddleware, async (req, res) => {
     }
 });
 
-router.post('/courses/:courseId', userMiddleware, (req, res) => {
+router.post('/courses/:courseId', userMiddleware, async (req, res) => {
     // Implement course purchase logic
+    const purchasedCourse = req.params.courseId
+    try {
+        const purchasedCourseExists = await Course.findById(purchasedCourse);
+        if (!purchasedCourseExists) {
+            return res.status(404).send('Course doesn\'t exist!');
+        }
+        res.json({ message: 'Course purchased successfully' })
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
 router.get('/purchasedCourses', userMiddleware, (req, res) => {
