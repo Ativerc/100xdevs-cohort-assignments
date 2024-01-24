@@ -45,9 +45,13 @@ router.post('/courses/:courseId', userMiddleware, async (req, res) => {
         if (!purchasedCourseExists) {
             return res.status(404).send('Course doesn\'t exist!');
         }
+        const user = await User.findOne({ username: req.headers.username });
+        user.courses = purchasedCourseExists._id
+        await user.save()
         res.json({ message: 'Course purchased successfully' })
     } catch (err) {
         console.error(err.message);
+        res.status(500).send('Something went wrong!')
     }
 });
 
