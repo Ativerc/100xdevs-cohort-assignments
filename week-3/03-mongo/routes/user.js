@@ -28,8 +28,13 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-router.get('/courses', (req, res) => {
-    // Implement listing all courses logic
+router.get('/courses', userMiddleware, async (req, res) => {
+    try {
+        const allCourses = await Course.find({});
+        res.status(200).json(allCourses);
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
 router.post('/courses/:courseId', userMiddleware, (req, res) => {
