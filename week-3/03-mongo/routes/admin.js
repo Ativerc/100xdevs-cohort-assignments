@@ -20,10 +20,10 @@ router.post('/signup', async (req, res) => {
             // Implement admin signup logic
         const username = req.body.username;
         const password = req.body.password;
-        // check if username/password combo exits in DB
+        // check if username exits in DB
         const existingAdmin = await Admin.findOne({username})
         if (existingAdmin) {
-            res.status(400).send('Username already exists!')
+            res.status(400).send('Admin already exists!')
         } else {
             await Admin.create( {username, password} );
             res.status(201).json({ message: 'Admin created successfully' })
