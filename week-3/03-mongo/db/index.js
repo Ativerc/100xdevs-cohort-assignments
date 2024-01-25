@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
     courses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
-        refs: true,
+        /* refs: true,*/
     }]
 });
 

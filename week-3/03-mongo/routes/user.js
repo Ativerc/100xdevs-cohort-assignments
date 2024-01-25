@@ -55,8 +55,23 @@ router.post('/courses/:courseId', userMiddleware, async (req, res) => {
     }
 });
 
-router.get('/purchasedCourses', userMiddleware, (req, res) => {
+router.get('/purchasedCourses', userMiddleware, async (req, res) => {
     // Implement fetching purchased courses logic
+    const targetUsername = req.headers.username;
+    try {
+        const user = await User.findOne({
+            username: targetUsername
+        }).populate('courses').exec();
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.json({
+            courses: user.courses
+        })
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Internal Server Error Occured!');
+    }
 });
 
 module.exports = router
