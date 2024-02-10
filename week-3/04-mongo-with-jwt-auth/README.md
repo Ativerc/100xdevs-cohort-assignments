@@ -19,11 +19,11 @@ You need to use mongodb to store all the data persistently.
   Description: Logs in an admin account.
   Input Body: { username: 'admin', password: 'pass' }
   Output: { token: 'your-token' }
-- POST /admin/courses
+- ~~POST /admin/courses~~
   Description: Creates a new course.
   Input: Headers: { 'Authorization': 'Bearer <your-token>' }, Body: { title: 'course title', description: 'course description', price: 100, imageLink: 'https://linktoimage.com' }
   Output: { message: 'Course created successfully', courseId: "new course id" }
-- GET /admin/courses
+- ~~GET /admin/courses~~
   Description: Returns all the courses.
   Input: Headers: { 'Authorization': 'Bearer <your-token>' }
   Output: { courses: [ { id: 1, title: 'course title', description: 'course description', price: 100, imageLink: 'https://linktoimage.com', published: true }, ... ] }
