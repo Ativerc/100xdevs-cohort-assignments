@@ -6,7 +6,7 @@ const adminMiddleware = require("../middleware/admin");
 const router = Router();
 
 const jwt = require('jsonwebtoken');
-const jwtPassword = 'somesecret2346'
+const jwtPassword = process.env.jwtSecret;
 
 
 
@@ -66,8 +66,23 @@ router.post('/signin', async (req, res) => {
     }
 });
 
-router.post('/courses', adminMiddleware, (req, res) => {
-    // Implement course creation logic
+router.post('/courses', adminMiddleware, async (req, res) => {
+    const title = req.body.title;
+    const description = req.body.description;
+    const price = req.body.price;
+    const imageLink = req.body.imageLink;
+    
+    try {
+        await Course.create({
+            title,
+            description,
+            price,
+            imageLink
+        })
+    } catch(error) {
+        console.error(error);
+    }
+    res.status(200).send(`${title} Success Course Created`)
 });
 
 router.get('/courses', adminMiddleware, (req, res) => {
