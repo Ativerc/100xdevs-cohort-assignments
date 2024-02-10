@@ -3,7 +3,7 @@
 ### Description
 
 Same as the last assignment but you need to use jwts for authentication.
-We have introduced the signgin endpoints for both users and admins.
+We have introduced the signin endpoints for both users and admins.
 For this one, in every authenticated requests, you need to send the jwt in headers (Authorization : "Bearer <actual token>").
 You need to use mongodb to store all the data persistently.
 
@@ -11,11 +11,11 @@ You need to use mongodb to store all the data persistently.
 
 ### Admin Routes:
 
-- POST /admin/signup
+- ~~POST /admin/signup~~
   Description: Creates a new admin account.
   Input Body: { username: 'admin', password: 'pass' }
   Output: { message: 'Admin created successfully' }
-- POST /admin/signin
+- ~~POST /admin/signin~~
   Description: Logs in an admin account.
   Input Body: { username: 'admin', password: 'pass' }
   Output: { token: 'your-token' }
