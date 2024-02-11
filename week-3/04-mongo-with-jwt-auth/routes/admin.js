@@ -51,6 +51,7 @@ router.post('/signin', async (req, res) => {
                 console.log("send success status")
                 // get token
                 const jwtToken = signJwt(username)
+                // :TODO: Save JWT Token in DB
                 res.status(200).json({
                     token: jwtToken
                 })
@@ -71,13 +72,15 @@ router.post('/courses', adminMiddleware, async (req, res) => {
     const description = req.body.description;
     const price = req.body.price;
     const imageLink = req.body.imageLink;
+    const published = req.body.published;
     
     try {
         await Course.create({
             title,
             description,
             price,
-            imageLink
+            imageLink,
+            published
         })
     } catch(error) {
         console.error(error);
