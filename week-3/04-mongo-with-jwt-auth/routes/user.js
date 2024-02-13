@@ -55,14 +55,29 @@ router.post('/signin', async (req, res) => {
             res.status(403).json({message: "Forbidden! User doesn't exist!"})
         }
     } catch (err) {
+        res.status(500).json({message: 'Internal Server Error!'});
+        console.log("console.error(err.message)");
         console.error(err.message);
-        res.status(500).json({message: 'Internal Server Error!'})
+        console.log("\nconsole.log(err.messsage): ");
+        console.log(err.messsage)
+        console.log("\nconsole.log(err):");
+        console.log(err);
+        console.log("\nconsole.error(err):");
+        console.error(err);
     }
     
 });
 
-router.get('/courses', (req, res) => {
-    // Implement listing all courses logic
+router.get('/courses', async (req, res) => {
+    try {
+        const courses = await Course.find({}).exec();
+        let publicCourses = courses.filter((element) => {
+            return element.published == true
+        })
+        res.status(200).json({publicCourses})
+    } catch(err) {
+        res.status(500).json({message:"Server Error!"});
+    }
 });
 
 router.post('/courses/:courseId', userMiddleware, (req, res) => {
