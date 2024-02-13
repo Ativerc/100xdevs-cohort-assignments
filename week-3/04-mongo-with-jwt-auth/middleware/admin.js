@@ -18,6 +18,7 @@ function adminMiddleware(req, res, next) {
             })
         }
     } catch(error) {
+        console.error(error.message)
         console.error(error);
     }
 }

@@ -62,12 +62,13 @@ router.post('/signin', async (req, res) => {
             res.status(403).send("Forbidden. User Doesn't exist")
         }
     } catch(error) {
-        console.error(error);
+        console.error(error.message);
         res.status(500).send('Internal Server Error');
     }
 });
 
 router.post('/courses', adminMiddleware, async (req, res) => {
+    // :TODO: Put zod validation here
     const title = req.body.title;
     const description = req.body.description;
     const price = req.body.price;
