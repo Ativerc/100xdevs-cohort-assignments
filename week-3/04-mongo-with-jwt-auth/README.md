@@ -30,11 +30,11 @@ You need to use mongodb to store all the data persistently.
 
 ### User routes
 
-- POST /users/signup
+- ~~POST /users/signup~~
   Description: Creates a new user account.
   Input: { username: 'user', password: 'pass' }
   Output: { message: 'User created successfully' }
-- POST /users/signin
+- ~~POST /users/signin~~
   Description: Logs in a user account.
   Input: { username: 'user', password: 'pass' }
   Output: { token: 'your-token' }
