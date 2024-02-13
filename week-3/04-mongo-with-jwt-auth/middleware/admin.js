@@ -20,6 +20,7 @@ function adminMiddleware(req, res, next) {
     } catch(error) {
         console.error(error.message)
         console.error(error);
+        res.status(400).json({message: "Bad Request!"});
     }
 }
 
