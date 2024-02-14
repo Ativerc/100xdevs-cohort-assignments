@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING
+const DB_CONNECTION_STRING = process.env.db_connection_string
 
 // Connect to MongoDB
 mongoose.connect(DB_CONNECTION_STRING);
