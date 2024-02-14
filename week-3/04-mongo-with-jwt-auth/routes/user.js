@@ -11,6 +11,17 @@ function signJwt(username) {
     return jwt.sign(payload, jwtPassword);
 }
 
+async function getPublishedCourses() {
+    console.log("here")
+    const courses = await Course.find({});
+    console.log("here2")
+    let publishedCourses = courses.filter((element) => {
+        return element.published == true
+    });
+    console.log(`here again ${typeof publishedCourses}`);
+    return publishedCourses;
+}
+
 // User Routes
 router.post('/signup', async (req, res) => {
     // Implement user signup logic
@@ -70,18 +81,43 @@ router.post('/signin', async (req, res) => {
 
 router.get('/courses', async (req, res) => {
     try {
-        const courses = await Course.find({}).exec();
-        let publicCourses = courses.filter((element) => {
-            return element.published == true
-        })
+        const publicCourses = await getPublishedCourses()
         res.status(200).json({publicCourses})
     } catch(err) {
         res.status(500).json({message:"Server Error!"});
     }
 });
 
-router.post('/courses/:courseId', userMiddleware, (req, res) => {
-    // Implement course purchase logic
+router.post('/courses/:courseId', userMiddleware, async (req, res) => {
+    const courseId = req.params.courseId;
+    let username = req.username;
+    console.log(courseId);
+    
+    const publishedCourses = await getPublishedCourses();
+    let courseExists = false;
+    publishedCourses.forEach((element) => {
+        if (element._id == courseId){
+            courseExists = true;
+            return;
+        }
+    })
+    if (courseExists) {
+        try {
+            // :TODO: Check if user already has the course in the array of user.courses; if yes, throw an error
+            const updateExecuted = await User.findOneAndUpdate({username}, {$push: {courses: courseId} });
+            if (!updateExecuted) {
+                throw new Error("User Not Found!");
+            } else {
+                res.status(200).json({message: `Course ${courseId} added under user ${username}`})
+            }
+        } catch(err) {
+            res.status(400).json({message: `${err.message}`})
+            console.log(err.message)
+        }
+    } else {
+        res.status(400).json({message: "Course doesn't exist"})
+    }
+    
 });
 
 router.get('/purchasedCourses', userMiddleware, (req, res) => {
