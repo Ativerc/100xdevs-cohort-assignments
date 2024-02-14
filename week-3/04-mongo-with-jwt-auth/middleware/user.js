@@ -7,7 +7,6 @@ async function userMiddleware(req, res, next) {
         const receivedToken = req.headers.authorization;
         const tokenArray = receivedToken.split(" ");
         const userJwt = tokenArray[1];
-
         const jwtVerifyOutput = jwt.verify(userJwt, jwtPassword);
         const jwtUsername = jwtVerifyOutput.username;
         if (jwtUsername) {

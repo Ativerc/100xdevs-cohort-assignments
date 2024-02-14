@@ -120,8 +120,16 @@ router.post('/courses/:courseId', userMiddleware, async (req, res) => {
     
 });
 
-router.get('/purchasedCourses', userMiddleware, (req, res) => {
-    // Implement fetching purchased courses logic
+router.get('/purchasedCourses', userMiddleware, async (req, res) => {
+    const username = req.username;
+    try {
+        const user = await User.findOne({username}).populate('courses').exec();
+        const purchasedCourses = user.courses;
+        res.status(200).json({purchasedCourses})
+    }catch(err) {
+        console.log(err.message);
+        res.status(500).json({message: "Server Error"});
+    }
 });
 
 module.exports = router
