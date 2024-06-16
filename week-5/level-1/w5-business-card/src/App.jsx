@@ -3,29 +3,79 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
 
+const persons = [
+  {
+    "id": 1,
+    "name": "John Doe",
+    "description": "Software Engineer",
+    "interests": ["Coding", "Gaming", "Reading"],
+    "socials": [
+      {"id": 1, "url": "https://www.linkedin.com/in/johndoe", "name": "LinkedIn"},
+      {"id": 2, "url": "https://twitter.com/johndoe", "name": "Twitter"}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "description": "Data Scientist",
+    "interests": ["Machine Learning", "Statistics", "Traveling"],
+    "socials": [
+      {"id": 3, "url": "https://github.com/janesmith", "name": "GitHub"},
+      {"id": 4, "url": "https://www.researchgate.net/profile/Jane_Smith", "name": "ResearchGate"}
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Alice Johnson",
+    "description": "UX Designer",
+    "interests": ["Design Thinking", "User Experience", "Photography"],
+    "socials": [
+      {"id": 5, "url": "https://dribbble.com/alicejohnson", "name": "Dribbble"},
+      {"id": 6, "url": "https://www.behance.net/alicejohnson", "name": "Behance"}
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Bob Brown",
+    "description": "Product Manager",
+    "interests": ["Project Management", "Product Development", "Tech Startups"],
+    "socials": [
+      {"id": 7, "url": "https://www.producthunt.com/@bobbrown", "name": "Product Hunt"},
+      {"id": 8, "url": "https://www.crunchbase.com/organization/bob-browns-startup", "name": "Crunchbase"}
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Charlie White",
+    "description": "Full Stack Developer",
+    "interests": ["Web Development", "JavaScript", "Open Source"],
+    "socials": [
+      {"id": 9, "url": "https://stackoverflow.com/users/1234567/charliewhite", "name": "Stack Overflow"},
+      {"id": 10, "url": "https://github.com/charliewhite", "name": "GitHub"}
+    ]
+  }
+]
+
+function App() {
   return (
     <>
-      <Card />
+      {persons.map((person) => <Card key={person.id} person={person}/>)}
     </>
   )
 }
 
-function Card() {
+function Card({person}) {
   return (
     <div style={styles.card}>
-      <div style={styles.name}>Test Name</div>
-      <div style={styles.description}>Descrip Descript Description</div>
+      <div style={styles.name}>{person.name}</div>
+      <div style={styles.description}>{person.description}</div>
       <div style={styles.interestsHeader}>Interests</div>
       <div style={styles.interestsList}>
-        <div style={styles.interestItem}>Football</div>
-        <div style={styles.interestItem}>Hardball</div>
+        {person.interests.map((interest, index) => <div key={index} style={styles.interestItem}>{interest}</div>)}
       </div>
       <div style={styles.socialLinks}>
-        <a href='https://www.linkedin.com' target='_blank' rel="noopener noreferrer" style={styles.link}>LinkedIn</a>
-        <a href='https://www.twitter.com' target='_blank' rel="noopener noreferrer" style={styles.link}>Twitter</a>
+        {person.socials.map((socialItem, index) => <a key={index} href={socialItem.url} target='_blank' rel="noopener noreferrer" style={styles.link}>{socialItem.name}</a> )}
       </div>
     </div>
 )
@@ -63,7 +113,7 @@ const styles = {
     borderRadius: '5px', // Border radius for rounded corners
     backgroundColor: '#007BFF', // Background color for the button
     display: 'inline-block', // Display as inline-block to be side by side
-    margin: '10px', // Margin between buttons
+    margin: '', // Margin between buttons
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Box shadow for a subtle lift
   },
   interestsHeader: {
