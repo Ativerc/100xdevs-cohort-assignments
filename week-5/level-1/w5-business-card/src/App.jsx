@@ -6,20 +6,31 @@ import './App.css'
 import jsonData from './data/persons.json'
 
 function App() {
-  const [persons, setNewPerson] = useState(jsonData);
+  const [persons, setPersons] = useState(jsonData);
+  const [adminMode, setAdminMode] = useState(false);
   console.log(persons)
+
+  function handleDelete(id) {
+    const deleteCandidate = persons.filter(person => person.id == id)[0]
+    if (window.confirm(`Delete user: ${deleteCandidate.name} ?`))
+      console.log()
+      setPersons( persons.filter(person => person.id !== id));
+  }
   return (
     <div>
       <div></div>
-      <AddNewPerson persons={persons} setNewPerson={setNewPerson}/>
+      <AddNewPerson persons={persons} setNewPerson={setPersons}/>
       <hr></hr>
-      <h1>Team</h1>
-      <div className="card-container">{persons.map((person) => <Card key={person.id} person={person}/>)}</div>
+      <div style={{display: "flex", justifyContent: "space-between"}}>
+        <h1>Team</h1>
+        <div><button onClick={() => setAdminMode(!adminMode)}>{adminMode ? "Save" : "Edit Team"}</button></div>
+      </div>
+      <div className="card-container">{persons.map((person) => <Card adminMode={adminMode} key={person.id} person={person} handleDelete={handleDelete}/>)}</div>
     </div>
   )
 }
 
-function Card({person}) {
+function Card({person, adminMode, handleDelete}) {
   return (
     <div style={styles.card}>
       <div style={styles.name}>{person.name}</div>
@@ -31,6 +42,7 @@ function Card({person}) {
       <div style={styles.socialLinks}>
         {person.socials.map((socialItem, index) => <a key={index} href={socialItem.url} target='_blank' rel="noopener noreferrer" style={styles.link}>{socialItem.name}</a> )}
       </div>
+      {adminMode ? <button onClick={() => handleDelete(person.id)}>Delete User</button> : ""}
     </div>
 )
 }
