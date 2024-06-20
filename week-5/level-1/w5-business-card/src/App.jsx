@@ -76,7 +76,7 @@ function AddNewPerson({persons, setNewPerson}) {
         <input type="text" name="socialName" id="social" placeholder='Social Website Name'/>
         <input type="text" name="socialUrl" id="social-url" placeholder='Social Website URL'/>
         <br />
-        <button>Reset</button>
+        <button type='reset'>Reset</button>
         <button type='submit'>Add to Team</button>
       </form>
     </div>
