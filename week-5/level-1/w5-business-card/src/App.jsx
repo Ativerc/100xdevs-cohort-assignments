@@ -16,6 +16,12 @@ function App() {
       console.log()
       setPersons( persons.filter(person => person.id !== id));
   }
+
+  function handleEdit(editthis) {
+    const editCandidate = editthis
+    console.log(`Edit: ${editCandidate.name}`)
+  }
+
   return (
     <div>
       <div></div>
@@ -25,12 +31,12 @@ function App() {
         <h1>Team</h1>
         <div><button onClick={() => setAdminMode(!adminMode)}>{adminMode ? "Save" : "Edit Team"}</button></div>
       </div>
-      <div className="card-container">{persons.map((person) => <Card adminMode={adminMode} key={person.id} person={person} handleDelete={handleDelete}/>)}</div>
+      <div className="card-container">{persons.map((person) => <Card adminMode={adminMode} key={person.id} person={person} handleDelete={handleDelete} handleEdit={handleEdit}/>)}</div>
     </div>
   )
 }
 
-function Card({person, adminMode, handleDelete}) {
+function Card({person, adminMode, handleDelete, handleEdit}) {
   return (
     <div style={styles.card}>
       <div style={styles.name}>{person.name}</div>
@@ -42,7 +48,11 @@ function Card({person, adminMode, handleDelete}) {
       <div style={styles.socialLinks}>
         {person.socials.map((socialItem, index) => <a key={index} href={socialItem.url} target='_blank' rel="noopener noreferrer" style={styles.link}>{socialItem.name}</a> )}
       </div>
-      {adminMode ? <button onClick={() => handleDelete(person.id)}>Delete User</button> : ""}
+
+      <div style={{display: adminMode ? "unset" : "none"}}>
+        <button onClick={() => handleEdit(person)}>Edit User</button>
+        <button onClick={() => handleDelete(person.id)}>Delete User</button>
+      </div>
     </div>
 )
 }
