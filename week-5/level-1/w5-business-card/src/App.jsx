@@ -3,65 +3,19 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-
-const persons = [
-  {
-    "id": 1,
-    "name": "John Doe",
-    "description": "Software Engineer",
-    "interests": ["Coding", "Gaming", "Reading"],
-    "socials": [
-      {"id": 1, "url": "https://www.linkedin.com/in/johndoe", "name": "LinkedIn"},
-      {"id": 2, "url": "https://twitter.com/johndoe", "name": "Twitter"}
-    ]
-  },
-  {
-    "id": 2,
-    "name": "Jane Smith",
-    "description": "Data Scientist",
-    "interests": ["Machine Learning", "Statistics", "Traveling"],
-    "socials": [
-      {"id": 3, "url": "https://github.com/janesmith", "name": "GitHub"},
-      {"id": 4, "url": "https://www.researchgate.net/profile/Jane_Smith", "name": "ResearchGate"}
-    ]
-  },
-  {
-    "id": 3,
-    "name": "Alice Johnson",
-    "description": "UX Designer",
-    "interests": ["Design Thinking", "User Experience", "Photography"],
-    "socials": [
-      {"id": 5, "url": "https://dribbble.com/alicejohnson", "name": "Dribbble"},
-      {"id": 6, "url": "https://www.behance.net/alicejohnson", "name": "Behance"}
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Bob Brown",
-    "description": "Product Manager",
-    "interests": ["Project Management", "Product Development", "Tech Startups"],
-    "socials": [
-      {"id": 7, "url": "https://www.producthunt.com/@bobbrown", "name": "Product Hunt"},
-      {"id": 8, "url": "https://www.crunchbase.com/organization/bob-browns-startup", "name": "Crunchbase"}
-    ]
-  },
-  {
-    "id": 5,
-    "name": "Charlie White",
-    "description": "Full Stack Developer",
-    "interests": ["Web Development", "JavaScript", "Open Source"],
-    "socials": [
-      {"id": 9, "url": "https://stackoverflow.com/users/1234567/charliewhite", "name": "Stack Overflow"},
-      {"id": 10, "url": "https://github.com/charliewhite", "name": "GitHub"}
-    ]
-  }
-]
+import jsonData from './data/persons.json'
 
 function App() {
+  const [persons, setNewPerson] = useState(jsonData);
+  console.log(persons)
   return (
-    <>
-      {persons.map((person) => <Card key={person.id} person={person}/>)}
-    </>
+    <div>
+      <div></div>
+      <AddNewPerson persons={persons} setNewPerson={setNewPerson}/>
+      <hr></hr>
+      <h1>Team</h1>
+      <div className="card-container">{persons.map((person) => <Card key={person.id} person={person}/>)}</div>
+    </div>
   )
 }
 
@@ -81,6 +35,54 @@ function Card({person}) {
 )
 }
 
+function AddNewPerson({persons, setNewPerson}) {
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("Add New Person handleSubmit Reached")
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const formJson = Object.fromEntries(formData.entries());
+    console.log(formJson);
+
+    console.log([formJson.socialName])
+    const newPersonObject = {
+      id: persons.length + 1,
+      name: formJson.name,
+      description: formJson.description,
+      interests: [formJson.interests],
+      socials: [{"url": formJson.socialUrl, "name": formJson.socialName}]
+    }
+
+    setNewPerson([...persons, newPersonObject])
+  }
+  return (
+    <div id="new-person-form">
+      <div style={{display: "flex", justifyContent: "space-evenly"}}>
+        <h2>Add to Team</h2>
+        </div>
+      <form method='post' onSubmit={handleSubmit}>
+        <label htmlFor="full-name">Full Name</label>
+        <input type="text" name="name" id="full-name" />
+        <br />
+        <label htmlFor="role">Role</label>
+        <input type="text" name="description" id="role" />
+        <br />
+        <label htmlFor="interests">Interests</label>
+        <input type="text" name="interests" id="interests" />
+        <br />
+        <label htmlFor="social">Website Link</label>
+        <input type="text" name="socialName" id="social" placeholder='Social Website Name'/>
+        <input type="text" name="socialUrl" id="social-url" placeholder='Social Website URL'/>
+        <br />
+        <button>Reset</button>
+        <button type='submit'>Add to Team</button>
+      </form>
+    </div>
+  )
+}
+
 // Styles
 const styles = {
   card: {
@@ -88,7 +90,7 @@ const styles = {
     borderRadius: '8px',
     padding: '20px',
     margin: '20px',
-    maxWidth: '400px',
+    width: '400px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#f8f9fa'
   },

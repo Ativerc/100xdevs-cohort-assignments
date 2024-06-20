@@ -1,0 +1,52 @@
+[
+    {
+      "id": 1,
+      "name": "John Doe",
+      "description": "Software Engineer",
+      "interests": ["Coding", "Gaming", "Reading"],
+      "socials": [
+        {"url": "https://www.linkedin.com/in/johndoe", "name": "LinkedIn"},
+        {"url": "https://twitter.com/johndoe", "name": "Twitter"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "description": "Data Scientist",
+      "interests": ["Machine Learning", "Statistics", "Traveling"],
+      "socials": [
+        {"url": "https://github.com/janesmith", "name": "GitHub"},
+        {"url": "https://www.researchgate.net/profile/Jane_Smith", "name": "ResearchGate"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Alice Johnson",
+      "description": "UX Designer",
+      "interests": ["Design Thinking", "User Experience", "Photography"],
+      "socials": [
+        {"url": "https://dribbble.com/alicejohnson", "name": "Dribbble"},
+        {"url": "https://www.behance.net/alicejohnson", "name": "Behance"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Bob Brown",
+      "description": "Product Manager",
+      "interests": ["Project Management", "Product Development", "Tech Startups"],
+      "socials": [
+        {"url": "https://www.producthunt.com/@bobbrown", "name": "Product Hunt"},
+        {"url": "https://www.crunchbase.com/organization/bob-browns-startup", "name": "Crunchbase"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Charlie White",
+      "description": "Full Stack Developer",
+      "interests": ["Web Development", "JavaScript", "Open Source"],
+      "socials": [
+        {"url": "https://stackoverflow.com/users/1234567/charliewhite", "name": "Stack Overflow"},
+        {"url": "https://github.com/charliewhite", "name": "GitHub"}
+      ]
+    }
+  ]
