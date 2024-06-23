@@ -7,6 +7,6 @@ There are no tests, but solution videos will be provided
   - [x] 1 factorial 
   - [x] 2 sentence filter
   - [x] 3 calc
-- [ ] 2 - useCallback 
+- [x] 2 - useCallback 
   - [x] 1 increment/decrement
-  - [ ] 
+  - [x] 2 showAlert
