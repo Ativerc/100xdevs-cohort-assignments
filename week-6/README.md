@@ -12,4 +12,4 @@ There are no tests, but solution videos will be provided
   - [x] 2 showAlert
 - [ ] 3 - useRef
   - [x] - 1 - set focus using useRef
-  - [ ] - 2 
+  - [x] - 2 - count via useRef variable
