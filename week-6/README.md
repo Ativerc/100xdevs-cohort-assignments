@@ -10,3 +10,6 @@ There are no tests, but solution videos will be provided
 - [x] 2 - useCallback 
   - [x] 1 increment/decrement
   - [x] 2 showAlert
+- [ ] 3 - useRef
+  - [x] - 1 - set focus using useRef
+  - [ ] - 2 
